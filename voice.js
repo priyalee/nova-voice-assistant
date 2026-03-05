@@ -1,176 +1,158 @@
-const startBtn = document.getElementById("startBtn")
-const statusText = document.getElementById("statusText")
-const speechText = document.getElementById("speechText")
-const responseText = document.getElementById("responseText")
+// Elements
+const startBtn = document.getElementById("startBtn");
+const talkBackBtn = document.getElementById("talkBackBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+const speechText = document.getElementById("speechText");
+const chatLog = document.getElementById("chatLog");
+const voiceSelect = document.getElementById("voiceSelect");
 
-const SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition
+// Status
+let statusText = document.getElementById("statusText") || (() => {
+  const p = document.createElement("p");
+  p.id = "statusText";
+  p.style.margin = "10px 0";
+  p.style.fontWeight = "bold";
+  p.style.fontSize = "14px";
+  p.textContent = "Idle";
+  document.querySelector(".container").prepend(p);
+  return p;
+})();
 
-if (!SpeechRecognition) {
-  alert("Speech Recognition not supported in this browser")
-  throw new Error("Speech Recognition unsupported")
+// Speech Recognition
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!SpeechRecognition) alert("Speech Recognition not supported");
+
+const recognition = new SpeechRecognition();
+recognition.lang = "en-US";
+recognition.continuous = true;
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+
+let isListening = false;
+let isSpeaking = false;
+let expectingResponse = false;
+let lastQuestion = "";
+let voices = [];
+
+// Load voices
+function loadVoices() {
+  voices = window.speechSynthesis.getVoices();
+  voiceSelect.innerHTML = '<option value="">Default Voice</option>';
+  voices.forEach((v, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `${v.name} (${v.lang})`;
+    voiceSelect.appendChild(option);
+  });
 }
+window.speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
 
-const recognition = new SpeechRecognition()
-
-recognition.lang = "en-US"
-recognition.continuous = true
-recognition.interimResults = false
-recognition.maxAlternatives = 1
-
-let isListening = false
-let isSpeaking = false
-
+// Start Listening
 startBtn.addEventListener("click", () => {
-  if (!isListening) {
-    recognition.start()
-  }
-})
+  if (!isListening) recognition.start();
+});
 
-recognition.onstart = () => {
-  isListening = true
-  document.body.className = "listening"
-  statusText.textContent = "Listening for 'Nova'..."
+// Talk Back
+talkBackBtn.addEventListener("click", () => {
+  if (!isSpeaking) {
+    const text = prompt("What should Nova say?");
+    if (text) speak(text);
+  }
+});
+
+// Cancel
+cancelBtn.addEventListener("click", () => {
+  if (isListening) recognition.stop();
+  if (isSpeaking) window.speechSynthesis.cancel();
+  resetState();
+});
+
+function resetState() {
+  isListening = false;
+  isSpeaking = false;
+  expectingResponse = false;
+  lastQuestion = "";
+  document.body.className = "";
+  statusText.textContent = "Idle";
 }
+
+// Recognition events
+recognition.onstart = () => {
+  isListening = true;
+  document.body.className = "listening";
+  statusText.textContent = "Listening for 'Nova'...";
+};
 
 recognition.onresult = (event) => {
-  const result = event.results[event.results.length - 1][0]
+  const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase().trim();
+  if (event.results[event.results.length - 1][0].confidence < 0.55) return;
+  speechText.textContent = transcript;
 
-  if (result.confidence < 0.55) return
+  const userMsg = document.createElement("p");
+  userMsg.textContent = "You: " + transcript;
+  userMsg.style.margin = "5px 0";
+  chatLog.appendChild(userMsg);
+  chatLog.scrollTop = chatLog.scrollHeight;
 
-  const transcript = result.transcript.toLowerCase().trim()
+  const wakeWord = "nova";
+  if (!transcript.startsWith(wakeWord)) return;
 
-  speechText.textContent = transcript
+  const command = transcript.replace(wakeWord, "").trim();
+  if (!command) return speak("Yes?");
 
-  const wakeWord = "nova"
+  document.body.className = "processing";
+  statusText.textContent = "Processing...";
+  processCommand(command);
+};
 
-  if (!transcript.startsWith(wakeWord)) return
-
-  const command = transcript.replace(wakeWord, "").trim()
-
-  if (!command) {
-    respond("Yes?")
-    return
-  }
-
-  document.body.className = "processing"
-  statusText.textContent = "Processing..."
-
-  processCommand(command)
-}
-
-recognition.onerror = () => {
-  document.body.className = ""
-  statusText.textContent = "Speech recognition error"
-}
+recognition.onerror = (err) => {
+  console.error("SpeechRecognition error:", err);
+  resetState();
+};
 
 recognition.onend = () => {
-  if (isListening && !isSpeaking) {
-    recognition.start()
-  }
+  isListening = false;
+  if (!isSpeaking) resetState();
+};
+
+// Speak with selected voice
+function speak(message) {
+  if (!message) return;
+  isSpeaking = true;
+  document.body.className = "speaking";
+  statusText.textContent = "Speaking...";
+
+  const utter = new SpeechSynthesisUtterance(message);
+  const selectedIndex = voiceSelect.value;
+  if (selectedIndex !== "") utter.voice = voices[selectedIndex];
+  utter.lang = "en-US";
+
+  utter.onend = () => {
+    isSpeaking = false;
+    document.body.className = "listening";
+    statusText.textContent = "Listening for 'Nova'...";
+    if (!isListening) recognition.start();
+  };
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utter);
+
+  // Append Nova message to chat
+  const msg = document.createElement("p");
+  msg.textContent = "Nova: " + message;
+  msg.style.margin = "5px 0";
+  chatLog.appendChild(msg);
+  chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-function processCommand(command) {
-  for (const cmd of commands) {
-    if (cmd.pattern.test(command)) {
-      cmd.action(command)
-      return
-    }
-  }
+// Reading Modes
+document.getElementById("readConversation").addEventListener("click", () => {
+  const text = Array.from(chatLog.querySelectorAll("p")).map(p => p.textContent).join(". ");
+  speak(text || "Conversation is empty");
+});
 
-  fallbackSearch(command)
-}
-
-const commands = [
-  {
-    pattern: /^open (.+)/,
-    action: (command) => {
-      const site = command.replace("open ", "").trim()
-
-      const domain = site
-        .replace(/\s+/g, "")
-        .replace(".com", "")
-        .replace(".in", "")
-
-      const url = "https://" + domain + ".com"
-
-      respond("Opening " + site)
-
-      window.open(url, "_blank", "noopener,noreferrer")
-    }
-  },
-
-  {
-    pattern: /^search (.+)/,
-    action: (command) => {
-      const query = command.replace("search ", "")
-
-      respond("Searching for " + query)
-
-      window.open(
-        "https://www.google.com/search?q=" +
-          encodeURIComponent(query),
-        "_blank",
-        "noopener,noreferrer"
-      )
-    }
-  },
-
-  {
-    pattern: /^time$/,
-    action: () => {
-      const time = new Date().toLocaleTimeString()
-
-      respond("The time is " + time)
-    }
-  },
-
-  {
-    pattern: /^date$/,
-    action: () => {
-      const date = new Date().toDateString()
-
-      respond("Today is " + date)
-    }
-  },
-
-  {
-    pattern: /^(hello|hi)$/,
-    action: () => {
-      respond("Hello. How can I help you?")
-    }
-  }
-]
-
-function fallbackSearch(query) {
-  respond("Searching Google for " + query)
-
-  window.open(
-    "https://www.google.com/search?q=" +
-      encodeURIComponent(query),
-    "_blank",
-    "noopener,noreferrer"
-  )
-}
-
-function respond(message) {
-  responseText.textContent = message
-
-  document.body.className = "speaking"
-  statusText.textContent = "Speaking..."
-
-  isSpeaking = true
-
-  const speech = new SpeechSynthesisUtterance(message)
-
-  speech.lang = "en-US"
-
-  speech.onend = () => {
-    isSpeaking = false
-    document.body.className = "listening"
-    statusText.textContent = "Listening for 'Nova'..."
-  }
-
-  window.speechSynthesis.cancel()
-  window.speechSynthesis.speak(speech)
-}
+document.getElementById("readScreen").addEventListener("click", () => {
+  const containerText = document.querySelector(".container").innerText;
+  speak(containerText);
+});
