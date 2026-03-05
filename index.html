@@ -4,61 +4,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Nova Voice Assistant</title>
-
 <link rel="icon" type="image/png" href="logo.png">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <link rel="stylesheet" href="voice.css">
-
 <script defer src="voice.js"></script>
 </head>
 
 <body>
 
 <main class="container">
+  <h1>NOVA <i class="fa-solid fa-headset"></i></h1>
+  
+  <div class="mic-container">
+    <button id="startBtn" type="button" aria-label="Start voice recognition">
+      <i class="fa-solid fa-microphone"></i>
+      <span>Start Listening</span>
+    </button>
 
-<h1>
-NOVA
-<i class="fa-solid fa-headset"></i>
-</h1>
+    <button id="talkBackBtn" type="button" aria-label="Talk back to assistant">
+      <i class="fa-solid fa-robot"></i>
+      <span>Talk Back</span>
+    </button>
+  </div>
 
-<div class="mic-container">
-<button id="startBtn" type="button" aria-label="Start voice recognition">
-<i class="fa-solid fa-microphone"></i>
-<span>Start Listening</span>
-</button>
-</div>
+  <div class="speech-output">
+    <h3><i class="fa-brands fa-speakap"></i> You Said:</h3>
+    <p id="speechText" aria-live="polite">Waiting for speech...</p>
+  </div>
 
-<div class="status" id="statusBox">
-<p id="statusText" aria-live="polite">
-<i class="fa-solid fa-microphone-lines"></i>
-Click the microphone and speak
-</p>
-</div>
-
-<div class="speech-output">
-<h3>
-<i class="fa-brands fa-speakap"></i>
-You Said:
-</h3>
-<p id="speechText" aria-live="polite">
-Waiting for speech...
-</p>
-</div>
-
-<div class="response-output">
-<h3>
-<i class="fa-solid fa-comment"></i>
-System Response:
-</h3>
-<p id="responseText" aria-live="polite">
-System response will appear here...
-</p>
-</div>
-
+  <div class="right-panel">
+    <div class="conversation-log-box">
+      <h3><i class="fa-solid fa-comments"></i> Conversation</h3>
+      <div id="chatLog"></div>
+    </div>
+  </div>
+  
+  <div class="cancel-container">
+    <button id="cancelBtn" type="button" aria-label="Cancel action">
+      <i class="fa-solid fa-ban"></i>
+      <span>Cancel</span>
+    </button>
+  </div>
 </main>
 
 </body>
