@@ -1,12 +1,5 @@
 # Nova Voice Assistant
 
-A browser-based voice recognition assistant built using:
-
-- HTML
-- CSS
-- JavaScript
-- Web Speech API
-
 ## Demo
 -Check it out here different versions of nova: 
 -[Nova Voice Assistant].
@@ -15,6 +8,12 @@ A browser-based voice recognition assistant built using:
 -pinkorb version-(https://pinkorb-nova.netlify.app/), 
 -black nova-(https://black-nova.netlify.app/), 
 -test version-(https://black-nova.netlify.app/), 
+
+A browser-based voice recognition assistant built using:
+- HTML
+- CSS
+- JavaScript
+- Web Speech API
 
 ## Features
 - Wake word: **"Nova"**
