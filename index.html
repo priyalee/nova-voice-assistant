@@ -1,52 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Voice Assistant</title>
+
+<title>Nova Notebook Assistant</title>
+
 <link rel="icon" type="image/png" href="logo.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <link rel="stylesheet" href="voice.css">
-<script defer src="voice.js"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 
 <body>
 
-<main class="container">
-  <h1>NOVA <i class="fa-solid fa-headset"></i></h1>
-  
-  <div class="mic-container">
-    <button id="startBtn" type="button" aria-label="Start voice recognition">
-      <i class="fa-solid fa-microphone"></i>
-      <span>Start Listening</span>
-    </button>
+<div class="notebook" id="notebook">
 
-    <button id="talkBackBtn" type="button" aria-label="Talk back to assistant">
-      <i class="fa-solid fa-robot"></i>
-      <span>Talk Back</span>
-    </button>
-  </div>
+<div class="notebook-cover" id="cover">
 
-  <div class="speech-output">
-    <h3><i class="fa-brands fa-speakap"></i> You Said:</h3>
-    <p id="speechText" aria-live="polite">Waiting for speech...</p>
-  </div>
+<div class="cover-text">
 
-  <div class="right-panel">
-    <div class="conversation-log-box">
-      <h3><i class="fa-solid fa-comments"></i> Conversation</h3>
-      <div id="chatLog"></div>
-    </div>
-  </div>
-  
-  <div class="cancel-container">
-    <button id="cancelBtn" type="button" aria-label="Cancel action">
-      <i class="fa-solid fa-ban"></i>
-      <span>Cancel</span>
-    </button>
-  </div>
-</main>
+<img src="logo.png" alt="Nova Logo" class="cover-logo">
+
+<h1>Nova</h1>
+<p>The Voice Assistant</p>
+
+</div>
+
+</div>
+
+<div class="page left">
+
+<h2 class="title">
+<i class="fa-solid fa-robot"></i>
+Nova Assistant
+</h2>
+
+<div class="speech-box">
+<p id="speechText">...</p>
+</div>
+
+<div class="controls">
+
+<button id="startBtn">
+<i class="fa-solid fa-microphone"></i>
+Start
+</button>
+
+<button id="talkBackBtn">
+<i class="fa-solid fa-comment-dots"></i>
+Talk
+</button>
+
+<button id="cancelBtn">
+<i class="fa-solid fa-stop"></i>
+Stop
+</button>
+
+</div>
+
+</div>
+
+<div class="page right">
+
+<h3 class="chat-title">
+<i class="fa-solid fa-comments"></i>
+Chat
+</h3>
+<div class="status-box">
+<span id="status">Idle</span>
+</div>
+
+<div id="chatLog"></div>
+
+</div>
+
+</div>
+
+<script src="voice.js"></script>
 
 </body>
+
 </html>

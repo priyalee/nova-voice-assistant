@@ -1,260 +1,276 @@
-/* Reset and box-sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:"Segoe UI",sans-serif;
+background:linear-gradient(135deg,#d7eef5,#e9f7ff,#e6f5ee,#f4faf7);
+background-size:400% 400%;
+animation:bgMove 18s ease infinite alternate;
+overflow:hidden;
+color:#2e3a3f
 }
 
-/* Full Screen Background */
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-
-    /* Warm dark aurora gradient */
-    background: linear-gradient(270deg, #4b2e2a, #6b3f3c, #a67c6a, #c7a28e, #dcbda2, #f0d8c5);
-    background-size: 1200% 1200%;
-    animation: gradientShift 30s ease infinite;
+@keyframes bgMove{
+0%{background-position:0% 50%}
+100%{background-position:100% 50%}
 }
 
-/* Gradient shift animation */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 50%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 50%; }
-    100% { background-position: 0% 50%; }
+/* NOTEBOOK */
+
+.notebook{
+width:860px;
+max-width:95%;
+height:520px;
+display:flex;
+position:relative;
+perspective:2200px;
+filter:drop-shadow(0 40px 60px rgba(0,0,0,.25));
 }
 
-/* ======================= */
-/* Sparkly Stars Overlay */
-/* ======================= */
-body::before, body::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    background: transparent;
-    box-shadow: 
-        /* body::before */
-        50px 80px #fff, 120px 150px #fff, 200px 60px #fff, 280px 200px #fff,
-        350px 90px #fff, 420px 170px #fff, 500px 50px #fff, 580px 220px #fff,
-        650px 120px #fff, 720px 60px #fff, 800px 180px #fff, 880px 140px #fff,
-        950px 210px #fff, 1020px 80px #fff, 1100px 150px #fff;
-    animation: twinkle 4s infinite alternate;
+.page::before,
+.page::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+left:0;
+top:0;
+border-radius:inherit;
+background:#fffef9;
+z-index:-1;
 }
 
-body::after {
-    box-shadow:
-        /* body::after */
-        30px 200px #fff, 100px 90px #fff, 180px 250px #fff, 250px 150px #fff,
-        320px 50px #fff, 400px 280px #fff, 470px 70px #fff, 540px 180px #fff,
-        610px 230px #fff, 680px 90px #fff, 750px 200px #fff, 820px 140px #fff;
-    animation: twinkle 6s infinite alternate;
+.page::before{
+.notebook::before{
+content:"";
+position:absolute;
+left:50%;
+top:0;
+width:6px;
+height:100%;
+background:linear-gradient(
+to right,
+rgba(0,0,0,.25),
+rgba(255,255,255,.4),
+rgba(0,0,0,.2)
+);
+transform:translateX(-50%);
+border-radius:4px;
+z-index:3;
+opacity:0;
+animation:spineAppear .5s ease forwards 3s
+}}
+
+.page::after{
+transform:translateY(8px);
+opacity:.3;
 }
 
-/* Twinkle animation */
-@keyframes twinkle {
-    0% { opacity: 0.2; }
-    50% { opacity: 1; }
-    100% { opacity: 0.2; }
+/* OUTER COVER */
+
+.notebook-cover{
+position:absolute;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:linear-gradient(145deg,#6aaed6,#8bd3c7,#c7ebe3);
+border-radius:14px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+color:#fff;
+font-size:24px;
+box-shadow:0 20px 70px rgba(0,0,0,.25);
+transform-origin:left;
+z-index:10;
+animation:coverFlip 3.2s cubic-bezier(.22,.61,.36,1) forwards 1s
 }
 
-/* Container Glass Card */
-.container {
-    position: relative;
-    z-index: 1; /* Above stars */
-    width: 90%;
-    max-width: 700px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(18px);
-    padding: 35px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.6),
-        0 0 25px rgba(255,255,255,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+@keyframes coverFlip{
+0%{transform:rotateY(0)}
+50%{transform:rotateY(-90deg)}
+85%{transform:rotateY(-160deg)}
+100%{transform:rotateY(-180deg);opacity:0}
 }
 
-.container:hover { 
-    transform: translateY(-5px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255,255,255,0.1);
+/* SPINE */
+
+.notebook::before{
+content:"";
+position:absolute;
+left:50%;
+top:0;
+width:4px;
+height:100%;
+background:linear-gradient(#d7d1c7,#c9c3b8);
+transform:translateX(-50%);
+border-radius:3px;
+z-index:3;
+opacity:0;
+animation:spineAppear .5s ease forwards 3s
 }
 
-/* Title */
-h1 {
-    width: 100%;
-    margin-bottom: 25px;
-    font-size: 32px;
-    letter-spacing: 1px;
-    color: #fff;
-    text-shadow: 0 0 12px #fff, 0 0 25px #dcbda2;
+@keyframes spineAppear{
+to{opacity:1}
 }
 
-h1 i {
-    margin-left: 10px;
-    color: #f0d8c5;
-    text-shadow: 0 0 10px #f0d8c5;
+/* PAGES */
+
+.page{
+flex:1;
+background:#fffef9;
+padding:36px;
+display:flex;
+flex-direction:column;
+gap:22px;
+opacity:0;
+backface-visibility:hidden;
+background-image:
+linear-gradient(#e8e1d7 1px,transparent 1px),
+linear-gradient(90deg,transparent 40px,#e8e1d7 41px,transparent 42px);
+background-size:100% 32px,100% 100%
 }
 
-/* Buttons */
-.mic-container {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
+/* LEFT PAGE */
+
+.left{
+border-radius:14px 0 0 14px;
+box-shadow:
+inset -8px 0 14px rgba(0,0,0,.08),
+inset -2px 0 6px rgba(0,0,0,.05);transform-origin:right;
+transform:rotateY(-90deg);
+animation:leftOpen .9s ease forwards 3.2s
 }
 
-#startBtn, #talkBackBtn, #cancelBtn {
-    border: none;
-    padding: 14px 28px;
-    font-size: 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    color: white;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    text-shadow: 0 0 6px rgba(255,255,255,0.4);
-    background-size: 400% 400%;
+.cover-logo{
+width:70px;
+margin-bottom:12px;
 }
 
-/* Button Shimmer Animation */
-@keyframes buttonShimmer {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+/* RIGHT PAGE */
+
+.right{
+border-radius:0 14px 14px 0;
+box-shadow:
+inset 8px 0 14px rgba(0,0,0,.08),
+inset 2px 0 6px rgba(0,0,0,.05);transform-origin:left;
+transform:rotateY(90deg);
+animation:rightOpen .9s ease forwards 3.2s
 }
 
-/* Start Listening Button */
-#startBtn {
-    background: linear-gradient(135deg, #d7a67a, #c6845a, #e6b89c, #f0d8c5);
-    animation: buttonShimmer 6s linear infinite;
-    box-shadow: 0 6px 20px rgba(255,200,150,0.4);
+@keyframes leftOpen{
+to{opacity:1;transform:rotateY(0)}
 }
 
-#startBtn:hover { transform: scale(1.06); box-shadow: 0 8px 30px rgba(255,200,150,0.6); }
-#startBtn:active { transform: scale(0.96); }
-#startBtn:focus { outline: 2px solid #f0d8c5; outline-offset: 3px; }
-
-/* Talk Back Button */
-#talkBackBtn {
-    background: linear-gradient(135deg, #c57c56, #a65940, #b58063, #d9b49a);
-    animation: buttonShimmer 6s linear infinite;
-    box-shadow: 0 6px 20px rgba(200,140,100,0.4);
+@keyframes rightOpen{
+to{opacity:1;transform:rotateY(0)}
 }
 
-#talkBackBtn:hover { transform: scale(1.06); box-shadow: 0 8px 30px rgba(200,140,100,0.6); }
-#talkBackBtn:active { transform: scale(0.96); }
-#talkBackBtn:focus { outline: 2px solid #dcbda2; outline-offset: 3px; }
+/* TITLE */
 
-/* Cancel Button */
-#cancelBtn {
-    background: linear-gradient(135deg, #a67c5a, #b89b80, #c7a28e, #dcbda2);
-    animation: buttonShimmer 6s linear infinite;
-    box-shadow: 0 6px 20px rgba(210,170,140,0.4);
+.title{
+font-size:26px;
+color:#40545c;
+display:flex;
+align-items:center;
+gap:10px
 }
 
-#cancelBtn:hover { transform: scale(1.06); box-shadow: 0 8px 30px rgba(210,170,140,0.6); }
-#cancelBtn:active { transform: scale(0.96); }
-#cancelBtn:focus { outline: 2px solid #dcbda2; outline-offset: 3px; }
+/* STATUS */
 
-/* Speech Output */
-.speech-output {
-    flex: 1 1 300px;
-    text-align: left;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 15px;
-    margin-bottom: 20px;
+.status-box span{
+padding:7px 15px;
+background:#e6f3f7;
+border-radius:20px;
+font-size:13px;
+color:#3d6b78
 }
 
-.speech-output h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+/* SPEECH */
+
+.speech-box{
+background:#f6fbfc;
+padding:20px;
+border-radius:12px;
+min-height:100px;
+box-shadow:inset 0 0 6px rgba(0,0,0,.05)
 }
 
-.speech-output p {
-    background: rgba(0,0,0,0.3);
-    padding: 12px;
-    border-radius: 10px;
-    min-height: 40px;
-    line-height: 1.5;
-    box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
-    transition: all 0.3s;
-    overflow-wrap: break-word;
+/* BUTTONS */
+
+.controls{
+display:flex;
+gap:12px;
+margin-top:auto;
+flex-wrap:wrap
 }
 
-.speech-output p:hover { background: rgba(0,0,0,0.5); }
-
-/* Conversation Panel */
-.right-panel {
-    flex: 1 1 300px;
-    background: rgba(255,255,255,0.05);
-    padding: 15px;
-    border-radius: 15px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+button{
+flex:1;
+border:none;
+padding:13px;
+border-radius:11px;
+font-size:15px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+transition:.25s;
+font-weight:600
 }
 
-#chatLog {
-    min-height: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 12px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
+#startBtn{
+background:linear-gradient(135deg,#4fa3d1,#6ec6b1);
+color:#fff
 }
 
-/* Microphone Pulse Animation */
-@keyframes micPulse {
-    0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.6); }
-    70% { box-shadow: 0 0 0 15px rgba(255,0,0,0); }
-    100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+#talkBackBtn{
+background:linear-gradient(135deg,#ffd89b,#ffe9c7);
+color:#6a4c1c
 }
 
-body.listening #startBtn {
-    animation: micPulse 1.5s infinite, buttonShimmer 6s linear infinite;
+#cancelBtn{
+background:linear-gradient(135deg,#e6eef2,#f5f9fb);
+color:#41535b
 }
 
-/* Cancel container */
-.cancel-container {
-    width: 100%;
-    margin-top: 25px;
-    text-align: center;
+button:hover{
+transform:translateY(-2px) scale(1.05);
+box-shadow:0 6px 18px rgba(0,0,0,.2)
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .container { flex-direction: column; }
-    .mic-container { justify-content: center; flex-wrap: wrap; }
-    .speech-output, .right-panel { flex: 1 1 100%; }
+/* CHAT */
+
+.chat-title{
+color:#40545c;
+display:flex;
+align-items:center;
+gap:8px
 }
 
-@media (max-width: 500px) {
-    .container { padding: 25px; }
-    h1 { font-size: 22px; }
-    #startBtn, #talkBackBtn, #cancelBtn {
-        font-size: 16px;
-        padding: 12px 20px;
-        width: 100%;
-        justify-content: center;
-    }
+#chatLog{
+flex:1;
+overflow-y:auto;
+font-size:15px;
+margin-top:10px;
+padding-right:6px
 }
 
+#chatLog p{
+margin-bottom:10px;
+padding:8px 10px;
+border-radius:8px;
+background:#f3f8fa;
+animation:fadeUp .35s ease
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(6px)}
+to{opacity:1;transform:translateY(0)}
+}
