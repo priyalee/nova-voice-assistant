@@ -15,7 +15,13 @@ A browser-based voice recognition assistant built using:
 - Responsive and works on most modern browsers
 
 ## Demo
-Check it out here: [Nova Voice Assistant](https://nova-voice-assistantnew.netlify.app/)
+Check it out here different versions of nova: 
+[Nova Voice Assistant]
+original version-(https://nova-voice-assistantnew.netlify.app/)
+notebook version-(https://notebook-version.netlify.app/)
+pinkorb version-(https://pinkorb-nova.netlify.app/)
+black nova-(https://black-nova.netlify.app/)
+test version-(https://black-nova.netlify.app/)
 
 ## How to Use
 1. Open the webpage in a supported browser (Chrome recommended).
