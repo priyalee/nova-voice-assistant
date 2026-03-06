@@ -3,7 +3,7 @@
 ## Demo
 Check out the different versions of Nova:
 
-- **Original version** – [Live Demo](https://nova-voice-assistantnew.netlify.app/)  
+- **Original version** – [Live Demo](https://original-va.netlify.app/)  
 - **Notebook version** – [Live Demo](https://notebook-version.netlify.app/)  
 - **Pinkorb version** – [Live Demo](https://pinkorb-nova.netlify.app/)  
 - **Black Nova** – [Live Demo](https://black-nova.netlify.app/)  
