@@ -1,106 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Voice Assistant</title>
-
-<link rel="icon" type="image/png" href="logo.png">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<link rel="stylesheet" href="voice.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Voice Assistant</title>
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="voice.css">
 </head>
 <body>
 
-<!-- Intro Screen -->
-<div class="intro-screen" id="introScreen">
-    <div class="orb"></div>
-    <h1 class="nova-title">NOVA</h1>
-    <p class="boot-text">Initializing Assistant...</p>
+  <!-- Startup Cover -->
+
+<!-- Startup Cover -->
+<div class="cover" id="cover">
+  <img src="logo.png" alt="Nova Logo">
 </div>
+<h1 class="cover-text" id="coverText">NOVA</h1>
 
-<!-- Main Assistant UI -->
-<div class="assistant-container" id="assistantUI">
 
-<header class="top-bar">
-    <div class="logo">
-        <img src="logo.png" alt="Nova">
-        <span>Nova Assistant</span>
-    </div>
-</header>
+  <!-- Application -->
+  <div class="app" id="notebook">
+    <header class="header">
+      <h1><i class="fa-solid fa-robot"></i> Nova Assistant</h1>
+      <span id="status">Idle</span>
+    </header>
 
-<div class="assistant-main">
+    <section class="speech">
+      <h3><i class="fa-solid fa-wave-square"></i> You Said</h3>
+      <p id="speechText">Waiting for speech...</p>
+    </section>
 
-    <div class="assistant-left">
+    <section class="controls">
+      <button id="startBtn"><i class="fa-solid fa-microphone"></i> Start Listening</button>
+      <button id="talkBackBtn"><i class="fa-solid fa-comment-dots"></i> Talk Back</button>
+      <button id="cancelBtn"><i class="fa-solid fa-stop"></i> Stop</button>
+    </section>
 
-        <div class="mic-container">
-            <button id="startBtn" class="mic-btn">
-                <i class="fa-solid fa-microphone"></i>
-            </button>
+    <section class="conversation">
+      <h3><i class="fa-solid fa-comments"></i> Conversation</h3>
+      <div id="chatLog"></div>
+    </section>
 
-            <div class="wave-container" id="waveAnimation">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+  </div>
 
-        <div class="speech-box">
-            <h3><i class="fa-solid fa-comment"></i> You Said</h3>
-            <p id="speechText">Press the mic and start speaking...</p>
-        </div>
+  <select id="voiceSelect" style="display:none;"></select>
 
-        <div class="assistant-actions">
-            <button id="talkBackBtn">
-                <i class="fa-solid fa-volume-high"></i>
-                Talk Back
-            </button>
-
-            <button id="cancelBtn">
-                <i class="fa-solid fa-stop"></i>
-                Stop
-            </button>
-        </div>
-
-        <div class="command-suggestions">
-            <h4>Try saying:</h4>
-            <ul>
-                <li>Open Google</li>
-                <li>Open YouTube</li>
-                <li>Search JavaScript tutorials</li>
-                <li>What time is it</li>
-            </ul>
-        </div>
-
-    </div>
-
-    <div class="assistant-right">
-
-        <div class="conversation-box">
-            <h3>
-                <i class="fa-solid fa-comments"></i>
-                Conversation
-            </h3>
-
-            <div id="chatLog"></div>
-
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-<select id="voiceSelect" style="display:none;"></select>
-
-<script src="voice.js"></script>
-
+  <script src="voice.js"></script>
 </body>
 </html>
-
