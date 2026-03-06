@@ -3,11 +3,7 @@
 ## Demo
 Check out the different versions of Nova:
 
-- **Original version** – [Live Demo](https://original-va.netlify.app/)  
-- **Notebook version** – [Live Demo](https://notebook-version.netlify.app/)  
 - **Pinkorb version** – [Live Demo](https://pinkorb-nova.netlify.app/)  
-- **Black Nova** – [Live Demo](https://black-nova.netlify.app/)  
-- **Color version** – [Live Demo](https://new-va.netlify.app/)  
 
 A browser-based voice recognition assistant built using:
 
