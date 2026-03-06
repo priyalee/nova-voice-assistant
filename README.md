@@ -7,13 +7,6 @@ A browser-based voice recognition assistant built using:
 - JavaScript
 - Web Speech API
 
-## Features
-- Wake word: **"Nova"**
-- Open websites via voice commands
-- Perform Google searches
-- Speak responses using text-to-speech
-- Responsive and works on most modern browsers
-
 ## Demo
 -Check it out here different versions of nova: 
 -[Nova Voice Assistant].
@@ -22,6 +15,14 @@ A browser-based voice recognition assistant built using:
 -pinkorb version-(https://pinkorb-nova.netlify.app/), 
 -black nova-(https://black-nova.netlify.app/), 
 -test version-(https://black-nova.netlify.app/), 
+
+## Features
+- Wake word: **"Nova"**
+- Open websites via voice commands
+- Perform Google searches
+- Speak responses using text-to-speech
+- Responsive and works on most modern browsers
+
 
 ## How to Use
 1. Open the webpage in a supported browser (Chrome recommended).
