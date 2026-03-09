@@ -25,6 +25,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <img src="logo.png">
 </div>
 
+<!-- Main Assistant UI -->
+<div class="assistant-container" id="assistantUI">
+
+<header class="top-bar">
+    <div class="logo">
+        <img src="logo.png" alt="Nova">
+        <span>Nova Assistant</span>
+    </div>
+</header>
+
+<div class="assistant-main">
+
+    <div class="assistant-left">
+
+        <div class="mic-container">
+            <button id="startBtn" class="mic-btn">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+
+            <div class="wave-container" id="waveAnimation">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="speech-box">
+            <h3><i class="fa-solid fa-comment"></i> You Said</h3>
+            <p id="speechText">Press the mic and start speaking...</p>
+        </div>
 
 <!-- Application -->
 <div class="app" id="app">
